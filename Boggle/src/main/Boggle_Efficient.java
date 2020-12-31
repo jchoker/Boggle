@@ -37,53 +37,11 @@ public class Boggle_Efficient {
         
         if(trie.contains(pref)) result.add(pref);
 
-        var neighbors = getUnvisitedNeighbors(cell, boggle);        
+        var neighbors = BoggleHelper.getUnvisitedNeighbors(cell, boggle);        
         for(var n : neighbors)
 		  dfs(boggle, n, pref, trie, result);
         
-        boggle[cell.row()][cell.col()]= ch; // unmark visited
-	}
-	
-	private static ArrayList<BoardIndex> getUnvisitedNeighbors(BoardIndex cell, char[][] boggle) {
-	
-		var neighbors = new ArrayList<BoardIndex>();		
-		
-		// move clockwise starting from North
-		var dirs = new int[][] {{-1, 0,},{-1, 1,},{ 0, 1}, { 1, 1}, { 1, 0,},{ 1, -1},{ 0, -1},{ -1, -1}};
-
-		for (var d : dirs)
-		{			
-			var neighbor = new BoardIndex(cell.row() + d[0], cell.col() + d[1]) ;
-			
-			if(isSafe(neighbor, boggle ) && boggle[neighbor.row()][neighbor.col()] != '*')
-				neighbors.add(neighbor);		
- 		}
-		
-		return neighbors;
-	}	
-	
-	private static boolean isSafe(BoardIndex idx, char[][] boggle) {
-		
-		var rows = boggle.length;
-		var cols = boggle[0].length;
-		
-		return (idx.row() >= 0 && idx.row() < rows) && (idx.col() >= 0 && idx.col() < cols);		
-	}
-	
-	// private convenience immutable class for referencing 2D cells
-	private static class BoardIndex
-	{
-		public BoardIndex(int row, int col)
-		{
-			this.row = row;
-			this.col = col;
-		}
-		
-		private int row;
-		private int col;
-	
-		public int row() { return row; }
-		public int col() { return col; }
+        boggle[cell.row()][cell.col()] = ch; // unmark visited
 	}
 }
 
