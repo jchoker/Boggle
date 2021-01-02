@@ -19,12 +19,11 @@ public class Boggle_BruteForce {
 		var cols = boggle[0].length;
 		
 		var allCombinations = new ArrayList<String>(); // store all possible string combinations in the matrix
-		var seen = new boolean[rows][cols];		
 		
 		for(var i = 0; i < rows; i++)
 			for(var j = 0; j < cols; j++)
 			{
-				boggleDfs(boggle, new BoardIndex(i, j), "", allCombinations, seen);
+				boggleDfs(boggle, new BoardIndex(i, j), "", allCombinations);
 			}
 		
 		var result = new ArrayList<String>();
@@ -35,7 +34,7 @@ public class Boggle_BruteForce {
 		return result;
 	}
 	
-	private static void boggleDfs(char[][] boggle, BoardIndex idx, String path, ArrayList<String> allCombinations, boolean[][] seen) {
+	private static void boggleDfs(char[][] boggle, BoardIndex idx, String path, ArrayList<String> allCombinations) {
 		
 		var ch = boggle[idx.row()][idx.col()];
 		path += ch;
@@ -45,7 +44,7 @@ public class Boggle_BruteForce {
 		var neighbors = BoggleHelper.getUnvisitedNeighbors(idx, boggle);
 		
 		for (var n : neighbors)		
-			boggleDfs(boggle, n, path, allCombinations, seen);		
+			boggleDfs(boggle, n, path, allCombinations);		
 		
 		boggle[idx.row()][idx.col()] = ch;
 	}	
